@@ -1,15 +1,10 @@
 import cv2 #for image processing
 import easygui #to open the filebox
-import numpy as np #to store image
-import imageio #to read image stored at particular path
-
 import sys
 import matplotlib.pyplot as plt
 import os
 import tkinter as tk
-from tkinter import filedialog
 from tkinter import *
-from PIL import ImageTk, Image
 
 top=tk.Tk()
 top.geometry('400x400')
@@ -44,7 +39,7 @@ def cartoonify(ImagePath):
     smoothGrayScale = cv2.medianBlur(grayScaleImage, 5)
     ReSized3 = cv2.resize(smoothGrayScale, (960, 540))
 
-    #retrieving the edges for cartoon effect
+    #retrieving the edges 
     #by using thresholding technique
     getEdge = cv2.adaptiveThreshold(smoothGrayScale, 255, 
         cv2.ADAPTIVE_THRESH_MEAN_C, 
@@ -53,7 +48,7 @@ def cartoonify(ImagePath):
     ReSized4 = cv2.resize(getEdge, (960, 540))
 
     #applying bilateral filter to remove noise 
-    #and keep edge sharp as required
+   
     colorImage = cv2.bilateralFilter(originalmage, 9, 300, 300)
     ReSized5 = cv2.resize(colorImage, (960, 540))
     
@@ -77,7 +72,7 @@ def cartoonify(ImagePath):
     
 def save(ReSized6, ImagePath):
     #saving an image using imwrite()
-    newName="cartoonified_Image"
+    newName="CartoonifiedImage"
     path1 = os.path.dirname(ImagePath)
     extension=os.path.splitext(ImagePath)[1]
     path = os.path.join(path1, newName+extension)
